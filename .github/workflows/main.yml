@@ -29,9 +29,15 @@ jobs:
     - name: Create ECR registry and repository
       run: |
         # Create ECR registry if it doesn't exist
-        #  aws ecr create-registry --registry-name my-ecr-registry
+        if ! aws ecr describe-registries --registry-names my-ecr-registry; then
+          aws ecr create-registry --registry-name my-ecr-registry
+        fi
         # Create ECR repository if it doesn't exist
-          aws ecr create-repository --repository-name my-ecr-repository
+        if ! aws ecr describe-repositories --repository-names $ECR_REPOSITORY; then
+          aws ecr create-repository --repository-name $ECR_REPOSITORY
+        else
+          echo "ECR repository $ECR_REPOSITORY already exists."
+        fi
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
