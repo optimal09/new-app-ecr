@@ -33,8 +33,8 @@ jobs:
           aws ecr create-registry --registry-name my-ecr-registry
         fi
         # Create ECR repository if it doesn't exist
-        if ! aws ecr describe-repositories --repository-names $ECR_REPOSITORY; then
-          aws ecr create-repository --repository-name $ECR_REPOSITORY
+        if ! aws ecr describe-repositories --repository-names my-ecr-repository; then
+          aws ecr create-repository --repository-name my-ecr-repository
         fi
 
     - name: Build and push Docker image
