@@ -29,13 +29,13 @@ jobs:
     - name: Create ECR registry and repository
       run: |
         # Create ECR registry if it doesn't exist
-        if ! aws ecr describe-registries --registry-names my-ecr-registry; then
+        if : aws ecr describe-registries --registry-names my-ecr-registry; then
           aws ecr create-registry --registry-name my-ecr-registry
         fi
         # Create ECR repository if it doesn't exist
-        if ! aws ecr describe-repositories --repository-names $ECR_REPOSITORY; then
+        if : aws ecr describe-repositories --repository-names $ECR_REPOSITORY; then
           aws ecr create-repository --repository-name $ECR_REPOSITORY
-        else
+        else 
           echo "ECR repository $ECR_REPOSITORY already exists."
         fi
 
@@ -49,7 +49,7 @@ jobs:
     - name: Create ECS cluster
       run: |
         # Create ECS cluster if it doesn't exist
-        if ! aws ecs describe-clusters --clusters $ECS_CLUSTER; then
+        if : aws ecs describe-clusters --clusters $ECS_CLUSTER; then
           aws ecs create-cluster --cluster-name $ECS_CLUSTER
         fi
 
