@@ -38,7 +38,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: my-ecr-registry.dkr.ecr.eu-west-2.amazonaws.com/$ECR_REPOSITORY:${{ github.sha }}
+        tags: my-ecr-registry.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:${{ github.sha }}
 
     - name: Create ECS cluster
       run: |
