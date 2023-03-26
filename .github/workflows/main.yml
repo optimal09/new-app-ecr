@@ -8,7 +8,7 @@ on:
 env:
   ECR_REGISTRY: <your-ecr-registry>
   ECR_REPOSITORY: <your-ecr-repository>
-  AWS_REGION: <your-aws-region>
+  AWS_REGION: eu-west-2
 
 jobs:
   build-and-push:
