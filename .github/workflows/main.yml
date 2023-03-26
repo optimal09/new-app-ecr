@@ -50,12 +50,11 @@ jobs:
    
 
     - name: Build and push Docker image
-      needs: login-ecr
       uses: docker/build-push-action@v2
       with:
-        context: .
-        push: true
-        tags: my-ecr-registry.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:${{ github.sha }}
+         context: .
+         push: true
+         tags: my-ecr-registry.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:${{ github.sha }}
 
 
 
