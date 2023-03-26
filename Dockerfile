@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install any necessary dependencies for your application
-RUN npm install --production
+RUN npm install --omit=prod
 
 # Make port 3000 available to the world outside this container
 EXPOSE 3000
