@@ -29,12 +29,12 @@ jobs:
     - name: Create ECR registry and repository
       run: |
         # Create ECR registry if it doesn't exist
-        if ! aws ecr describe-registries --registry-names my-ecr-registry; then
+        if ! aws ecr describe-registry --registry-names my-ecr-registry; then
           aws ecr create-registry --registry-name my-ecr-registry
         fi
 
         # Create ECR repository if it doesn't exist
-        if ! aws ecr describe-repositories --repository-names $ECR_REPOSITORY; then
+        if ! aws ecr describe-repository --repository-names $ECR_REPOSITORY; then
           aws ecr create-repository --repository-name $ECR_REPOSITORY
         fi
 
