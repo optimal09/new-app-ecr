@@ -43,13 +43,21 @@ jobs:
         else 
           echo "ECR repository $ECR_REPOSITORY already exists."
         fi
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+   
 
     - name: Build and push Docker image
+      needs: login-ecr
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
         tags: my-ecr-registry.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:${{ github.sha }}
+
+
 
     - name: Create ECS cluster
       run: |
