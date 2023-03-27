@@ -47,7 +47,7 @@ jobs:
     - name: Login to Amazon ECR
       run: |
         # Login to Amazon ECR
-        $(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username optimaltech --password-stdin Omodesire09@ $ECR_REGISTRY_URL)
+        $(aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username optimaltech --password-stdin Omodesire09@ 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository)
 
 
     - name: Build and push Docker image
