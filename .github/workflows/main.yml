@@ -43,6 +43,11 @@ jobs:
         else 
           echo "ECR repository $ECR_REPOSITORY already exists."
         fi
+        
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1    
 
     - name: Login to Amazon ECR
       run: |
