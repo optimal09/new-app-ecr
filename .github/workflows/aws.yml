@@ -9,6 +9,7 @@ env:
   AWS_DEFAULT_REGION: eu-west-2
   ECR_REPOSITORY_NAME: my-ecr-repository
   ECS_CLUSTER_NAME: my-ecs-cluster
+  ECS_SERVICE_NAME: my-ecs-service
 
 jobs:
   create-or-overwrite-ecr-repository:
@@ -73,8 +74,7 @@ jobs:
       run: |
         # Create ECS service
         aws ecs create-service \
-          --cluster-name $ECS_CLUSTER_NAME \
-          --service-name my-ecs-service \
+          --service-name $ECS_SERVICE_NAME \
           --task-definition my-task-definition \
           --desired-count 2 \
           --launch-type FARGATE \
