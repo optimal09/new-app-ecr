@@ -90,8 +90,3 @@ jobs:
               "protocol": "tcp"
             }]
         }]'
-        --cpu "256"
-        --memory "512"
-        --requires-compatibilities "FARGATE"
-        --network-mode "awsvpc"
-
