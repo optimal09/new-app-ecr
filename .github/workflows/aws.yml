@@ -73,9 +73,9 @@ jobs:
       run: |
         # Create ECS service
         aws ecs create-service \
-          --cluster-name $ECS_CLUSTER_NAME \
-          --service-name $ECS_SERVICE \
-          --task-definition <your-task-definition> \
+          --cluster-name my-ecs-cluster \
+          --service-name my-ecs-service \
+          --task-definition my-task-definition \
           --desired-count 2 \
           --launch-type FARGATE \
           --platform-version LATEST \
