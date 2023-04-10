@@ -80,7 +80,7 @@ jobs:
         --memory "512"
         --requires-compatibilities "FARGATE"
         --network-mode "awsvpc"
-        --container-definitions '[{
+        --container-definitions "$(cat container-definitions.json)" '[{
           "name": "my-container",
           "image": "438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest",
           "memoryReservation": 512,
