@@ -40,4 +40,12 @@ jobs:
       run: |
         # Retrieve an authentication token and authenticate Docker client to ECR
         aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 438337256072.dkr.ecr.eu-west-2.amazonaws.com
+        
+        
+        
+    - name: Build Docker image
+      run: |
+        # Build Docker image and tag it with ECR repository name
+        docker build -t my-ecr-repository .
+
 
