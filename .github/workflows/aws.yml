@@ -8,6 +8,7 @@ on:
 env:
   AWS_DEFAULT_REGION: eu-west-2
   ECR_REPOSITORY_NAME: my-ecr-repository
+  ECS_CLUSTER_NAME: my-ecs-cluster
 
 jobs:
   create-or-overwrite-ecr-repository:
@@ -59,6 +60,26 @@ jobs:
       run: |
         # Push Docker image to ECR repository
         docker push 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest
+        
+        
+        
+    - name: Create ECS cluster
+      run: |
+        # Create ECS cluster if it doesn't exist
+        if : aws ecs describe-clusters --clusters $ECS_CLUSTER; then
+          aws ecs create-cluster --cluster-name $ECS_CLUSTER
+        fi
+    - name: Create ECS service
+      run: |
+        # Create ECS service
+        aws ecs create-service \
+          --cluster $ECS_CLUSTER_NAME \
+          --service-name $ECS_SERVICE \
+          --task-definition <your-task-definition> \
+          --desired-count 2 \
+          --launch-type FARGATE \
+          --platform-version LATEST \
+          --network-configuration "awsvpcConfiguration={subnets=<your-subnets>,securityGroups=<your-security-groups>,assignPublicIp=DISABLED}"
 
 
 
