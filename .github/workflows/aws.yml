@@ -73,7 +73,7 @@ jobs:
       run: |
         # Create ECS service
         aws ecs create-service \
-          --cluster $ECS_CLUSTER_NAME \
+          --cluster-name $ECS_CLUSTER_NAME \
           --service-name $ECS_SERVICE \
           --task-definition <your-task-definition> \
           --desired-count 2 \
