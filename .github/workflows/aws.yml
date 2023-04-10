@@ -71,16 +71,23 @@ jobs:
         if : aws ecs describe-clusters --clusters $ECS_CLUSTER_NAME; then
           aws ecs create-cluster --cluster-name $ECS_CLUSTER_NAME
         fi
-    - name: Create ECS service
+    - name: Create ECS task definition
       run: |
-        # Create ECS service
-        aws ecs create-service \
-          --service-name $ECS_SERVICE_NAME \
-          --task-definition $TASK_DEFINITION \
-          --desired-count 2 \
-          --launch-type FARGATE \
-          --platform-version LATEST \
-          --network-configuration "awsvpcConfiguration={subnets=<your-subnets>,securityGroups=<your-security-groups>,assignPublicIp=DISABLED}"
-
-
+        # Create task definition
+        aws ecs register-task-definition \
+        --family my-task \
+        --container-definitions '[{
+          "name": "my-container",
+          "image": "438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest",
+          "memoryReservation": 512,
+          "portMappings": [{
+              "containerPort": 80,
+              "hostPort": 80,
+              "protocol": "tcp"
+            }]
+        }]'
+        --cpu "256"
+        --memory "512"
+        --requires-compatibilities "FARGATE"
+        --network-mode "awsvpc"
 
