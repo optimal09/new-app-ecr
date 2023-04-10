@@ -10,6 +10,7 @@ env:
   ECR_REPOSITORY_NAME: my-ecr-repository
   ECS_CLUSTER_NAME: my-ecs-cluster
   ECS_SERVICE_NAME: my-ecs-service
+  TASK_DEFINITION: my-task-definition
 
 jobs:
   create-or-overwrite-ecr-repository:
@@ -75,7 +76,7 @@ jobs:
         # Create ECS service
         aws ecs create-service \
           --service-name $ECS_SERVICE_NAME \
-          --task-definition my-task-definition \
+          --task-definition $TASK_DEFINITION \
           --desired-count 2 \
           --launch-type FARGATE \
           --platform-version LATEST \
