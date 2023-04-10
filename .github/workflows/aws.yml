@@ -66,14 +66,14 @@ jobs:
     - name: Create ECS cluster
       run: |
         # Create ECS cluster if it doesn't exist
-        if : aws ecs describe-clusters --clusters $ECS_CLUSTER; then
-          aws ecs create-cluster --cluster-name $ECS_CLUSTER
+        if : aws ecs describe-clusters --clusters $ECS_CLUSTER_NAME; then
+          aws ecs create-cluster --cluster-name $ECS_CLUSTER_NAME
         fi
     - name: Create ECS service
       run: |
         # Create ECS service
         aws ecs create-service \
-          --cluster-name my-ecs-cluster \
+          --cluster-name $ECS_CLUSTER_NAME \
           --service-name my-ecs-service \
           --task-definition my-task-definition \
           --desired-count 2 \
