@@ -47,5 +47,18 @@ jobs:
       run: |
         # Build Docker image and tag it with ECR repository name
         docker build -t my-ecr-repository .
+        
+        
+        
+    - name: Tag Docker image
+      run: |
+        # Tag Docker image with ECR repository URI and latest tag
+        docker tag my-ecr-repository:latest 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest
+
+    - name: Push Docker image
+      run: |
+        # Push Docker image to ECR repository
+        docker push 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest
+
 
 
