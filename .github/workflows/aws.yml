@@ -69,12 +69,12 @@ jobs:
         fi
    
     - name: Create ECS task definition
-  run: |
-    # Create task definition
-    aws ecs register-task-definition \
-    --family my-task \
-    --cpu 256 \
-    --memory 512 \
-    --requires-compatibilities FARGATE \
-    --network-mode awsvpc \
-    --container-definitions "$(cat container-definitions.json)"
+      run: |
+        # Create task definition
+        aws ecs register-task-definition \
+        --family my-task \
+        --cpu 256 \
+        --memory 512 \
+        --requires-compatibilities FARGATE \
+        --network-mode awsvpc \
+        --container-definitions "$(cat container-definitions.json)"
