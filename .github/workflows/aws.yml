@@ -84,7 +84,7 @@ jobs:
     - name: Create ECS service
       run: |
         # Create ECS service
-        aws ecs create-service \
+        aws ecs update-service \
         --cluster $ECS_CLUSTER_NAME \
         --service-name $ECS_SERVICE_NAME \
         --task-definition $TASK_DEFINITION \
