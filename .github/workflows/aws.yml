@@ -90,5 +90,5 @@ jobs:
         --task-definition $TASK_DEFINITION \
         --desired-count 1 \
         --launch-type "FARGATE" \
-        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b,subnet-0e55b,subnet-059ad],securityGroups=[sg-0df29]}"
+        --network-configuration "awsvpcConfiguration={subnets=[subnet-xxx,subnet-xxx],securityGroups=[sg-xxx]}"
 
