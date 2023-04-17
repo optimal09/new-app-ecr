@@ -13,7 +13,7 @@ env:
   TASK_DEFINITION: my-task-definition
 
 jobs:
-  create-or-overwrite-ecr-repository:
+  credentials:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,14 +27,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
         
-  Deploy:
+        
+  Create:
     runs-on: ubuntu-latest
     needs:
-      - create-or-overwrite-ecr-repository
+        - credentials
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
+    - uses: actions/checkout@v3
     - name: Delete existing ECR repository
       run: |
         set +e
