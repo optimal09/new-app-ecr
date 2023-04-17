@@ -69,21 +69,12 @@ jobs:
         fi
    
     - name: Create ECS task definition
-      run: |
-        # Create task definition
-        aws ecs register-task-definition \
-        --family my-task \
-        --cpu "256"
-        --memory "512"
-        --requires-compatibilities "FARGATE"
-        --network-mode "awsvpc"
-        --container-definitions "$(cat container-definitions.json)" '[{
-          "name": "my-container",
-          "image": "438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest",
-          "memoryReservation": 512,
-          "portMappings": [{
-              "containerPort": 80,
-              "hostPort": 80,
-              "protocol": "tcp"
-            }]
-        }]'
+  run: |
+    # Create task definition
+    aws ecs register-task-definition \
+    --family my-task \
+    --cpu 256 \
+    --memory 512 \
+    --requires-compatibilities FARGATE \
+    --network-mode awsvpc \
+    --container-definitions "$(cat container-definitions.json)"
