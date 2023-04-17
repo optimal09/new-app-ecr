@@ -10,7 +10,7 @@ env:
   ECR_REPOSITORY_NAME: my-ecr-repository
   ECS_CLUSTER_NAME: my-ecs-cluster
   ECS_SERVICE_NAME: my-ecs-service
-  TASK_DEFINITION: my-task-definition
+  TASK_DEFINITION: my-task
 
 jobs:
   AWS-Credentials:
