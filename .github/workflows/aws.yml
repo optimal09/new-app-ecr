@@ -78,3 +78,17 @@ jobs:
         --requires-compatibilities FARGATE \
         --network-mode awsvpc \
         --container-definitions "$(cat container-definitions.json)"
+        
+        
+        
+    - name: Create ECS service
+      run: |
+        # Create ECS service
+        aws ecs create-service \
+        --cluster $ECS_CLUSTER_NAME \
+        --service-name $ECS_SERVICE_NAME \
+        --task-definition $TASK_DEFINITION \
+        --desired-count 1 \
+        --launch-type "FARGATE" \
+        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b,subnet-0e55b,subnet-059ad],securityGroups=[sg-0df29]}"
+
