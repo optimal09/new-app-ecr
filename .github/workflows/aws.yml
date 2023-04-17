@@ -80,17 +80,14 @@ jobs:
         --container-definitions "$(cat container-definitions.json)"
         
         
-        
-    - name: Update ECS service
+    - name: Create ECS service
       run: |
-        # Update ECS service
-        aws ecs update-service \
+        # Create ECS service
+        aws ecs create-service \
         --cluster $ECS_CLUSTER_NAME \
-        --service $ECS_SERVICE_NAME \
+        --service-name $ECS_SERVICE_NAME \
         --task-definition $TASK_DEFINITION \
         --desired-count 1 \
         --launch-type "FARGATE" \
-        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b4048585c49a5,subnet-0e55b90760129e32a,subnet-059ad7ce46c3ff353],securityGroups=[sg-0df2999a37e8bd4e8],assignPublicIp=ENABLED}" \
+        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b4048585c49a5,subnet-0e55b90760129e32a,subnet-059ad7ce46c3ff353],securityGroups=[sg-0df2999a37e8bd4e8],assignPublicIp=ENABLED}"
         --force-new-deployment
-
-
