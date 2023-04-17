@@ -13,7 +13,7 @@ env:
   TASK_DEFINITION: my-task-definition
 
 jobs:
-  credentials:
+  AWS-Credentials:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,10 +28,10 @@ jobs:
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
         
         
-  Create:
+  Create-ECR:
     runs-on: ubuntu-latest
     needs:
-        - credentials
+        - AWS-Credentials
     steps:
     - uses: actions/checkout@v3
     - name: Delete existing ECR repository
@@ -45,39 +45,72 @@ jobs:
         aws ecr create-repository --repository-name $ECR_REPOSITORY_NAME
         
         
-        
+  Authenticate-Docker:
+    runs-on: ubuntu-latest
+    needs:
+        - Create-ECR
+    steps:
+    - uses: actions/checkout@v3    
     - name: Authenticate Docker to ECR
       run: |
         # Retrieve an authentication token and authenticate Docker client to ECR
         aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 438337256072.dkr.ecr.eu-west-2.amazonaws.com
         
         
-        
+  Build-Docker-Image:
+    runs-on: ubuntu-latest
+    needs:
+        - Authenticate-Docker
+    steps:
+    - uses: actions/checkout@v3   
     - name: Build Docker image
       run: |
         # Build Docker image and tag it with ECR repository name
         docker build -t my-ecr-repository .
         
         
-        
+  Tag-Docker-Image:
+    runs-on: ubuntu-latest
+    needs:
+        - Build-Docker-Image
+    steps:
+    - uses: actions/checkout@v3      
     - name: Tag Docker image
       run: |
         # Tag Docker image with ECR repository URI and latest tag
         docker tag my-ecr-repository:latest 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest
-
+        
+  Push-Docker-Image:
+    runs-on: ubuntu-latest
+    needs:
+        - Tag-Docker-Image
+    steps:
+    - uses: actions/checkout@v3     
     - name: Push Docker image
       run: |
         # Push Docker image to ECR repository
         docker push 438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest
         
         
-        
+  Create-ECS-Cluster:
+    runs-on: ubuntu-latest
+    needs:
+        - Push-Docker-Image
+    steps:
+    - uses: actions/checkout@v3      
     - name: Create ECS cluster
       run: |
         # Create ECS cluster if it doesn't exist
         if : aws ecs describe-clusters --clusters $ECS_CLUSTER_NAME; then
           aws ecs create-cluster --cluster-name $ECS_CLUSTER_NAME
         fi
+        
+  Create-ECS-Task-Definition:
+    runs-on: ubuntu-latest
+    needs:
+        - Create-ECS-Cluster
+    steps:
+    - uses: actions/checkout@v3     
     - name: Create ECS task definition
       run: |
         # Create task definition
