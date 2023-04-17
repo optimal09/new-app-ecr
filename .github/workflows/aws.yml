@@ -88,7 +88,8 @@ jobs:
         --cluster $ECS_CLUSTER_NAME \
         --service-name $ECS_SERVICE_NAME \
         --task-definition $TASK_DEFINITION \
-        --desired-count 1 \
+        --desired-count 3 \
         --launch-type "FARGATE" \
-        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b4048585c49a5,subnet-0e55b90760129e32a,subnet-059ad7ce46c3ff353],securityGroups=[sg-0df2999a37e8bd4e8]}"
+        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b4048585c49a5,subnet-0e55b90760129e32a,subnet-059ad7ce46c3ff353],securityGroups=[sg-0df2999a37e8bd4e8],assignPublicIp=ENABLED}"
+
 
