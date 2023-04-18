@@ -80,13 +80,10 @@ jobs:
         --container-definitions "$(cat container-definitions.json)"
         
         
-    - name: Create ECS service
+    - name: Update ECS service with new image
       run: |
-        # Create ECS service
-        aws ecs update-service \
-        --cluster $ECS_CLUSTER_NAME \
-        --service $ECS_SERVICE_NAME \
-        --task-definition $TASK_DEFINITION \
-        --desired-count 1 \
-        --network-configuration "awsvpcConfiguration={subnets=[subnet-0706b4048585c49a5,subnet-0e55b90760129e32a,subnet-059ad7ce46c3ff353],securityGroups=[sg-0df2999a37e8bd4e8],assignPublicIp=ENABLED}" \
-        --force-new-deployment
+        # Update ECS service with new image
+        NEW_IMAGE="438337256072.dkr.ecr.eu-west-2.amazonaws.com/my-ecr-repository:latest"
+        CURRENT_TASK_DEFINITION=$(aws ecs describe-services --cluster $ECS_CLUSTER_NAME --services $ECS_SERVICE_NAME --query "services[0].taskDefinition" --output text)
+        NEW_TASK_DEFINITION=$(echo $CURRENT_TASK_DEFINITION | sed "s|:.*$|:$NEW_IMAGE|")
+        aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --task-definition $NEW_TASK_DEFINITION
